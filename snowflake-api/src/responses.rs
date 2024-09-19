@@ -22,6 +22,8 @@ pub enum AuthResponse {
     Renew(RenewSessionResponse),
     Close(CloseSessionResponse),
     Error(AuthErrorResponse),
+    ExecError(ExecErrorResponse),
+    Other(serde_json::Value),
 }
 
 #[derive(Deserialize, Debug)]
@@ -54,9 +56,8 @@ pub struct ExecErrorResponseData {
     pub line: Option<i64>,
     pub pos: Option<i64>,
 
-    // fixme: only valid for exec query response error? present in any exec query response?
-    pub query_id: String,
-    pub sql_state: String,
+    pub query_id: Option<String>,
+    pub sql_state: Option<String>,
 }
 
 #[derive(Deserialize, Debug)]
